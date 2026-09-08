@@ -1,0 +1,7 @@
+{
+  "name": "تدريب الدماغ — ألعاب ذهنية",
+  "description": "تطبيق تدريب ذهني وألعاب عقلية باللغة العربية يشمل ألعاب الحساب، خداع الألوان، التدوير الذهني، نعم أو لا، ونمط التفكير العالي بالذكاء الاصطناعي.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
