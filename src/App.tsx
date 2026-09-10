@@ -6,9 +6,11 @@ import { YesNoGameScreen } from './components/YesNoGameScreen';
 import { HighThinkingScreen } from './components/HighThinkingScreen';
 import { InstructionsModal } from './components/InstructionsModal';
 import { DifficultyModal } from './components/DifficultyModal';
+import { BackgroundTelemetryHUD } from './components/BackgroundTelemetryHUD';
 import { setSoundMuted } from './utils/audio';
 
 const STORAGE_KEY = 'brain_trainer_stats_v1';
+const DEEPSEEK_KEY_STORAGE = 'deepseek_custom_api_key';
 
 const DEFAULT_STATS: StoredStats = {
   bestScore: 0,
@@ -39,6 +41,14 @@ export default function App() {
     return DEFAULT_STATS;
   });
 
+  const [customApiKey, setCustomApiKey] = useState<string>(() => {
+    try {
+      return localStorage.getItem(DEEPSEEK_KEY_STORAGE) || '';
+    } catch {
+      return '';
+    }
+  });
+
   const [currentScreen, setCurrentScreen] = useState<'home' | 'math_game' | 'yesno' | 'high_thinking'>('home');
   const [activeMathMode, setActiveMathMode] = useState<'op' | 'result' | 'stroop' | 'rotation' | 'mix'>('mix');
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty>('easy');
@@ -52,12 +62,18 @@ export default function App() {
     setSoundMuted(!stats.soundEnabled);
   }, [stats.soundEnabled]);
 
-  // Sync dark mode class on document
+  // Robust Theme Sync on root elements
   useEffect(() => {
+    const root = document.documentElement;
+    const body = document.body;
     if (stats.darkMode) {
-      document.documentElement.classList.add('dark');
+      root.classList.add('dark');
+      body.classList.add('dark');
+      root.style.colorScheme = 'dark';
     } else {
-      document.documentElement.classList.remove('dark');
+      root.classList.remove('dark');
+      body.classList.remove('dark');
+      root.style.colorScheme = 'light';
     }
   }, [stats.darkMode]);
 
@@ -66,6 +82,15 @@ export default function App() {
     setStats(newStats);
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(newStats));
+    } catch {
+      // Ignore storage error
+    }
+  };
+
+  const handleUpdateApiKey = (key: string) => {
+    setCustomApiKey(key);
+    try {
+      localStorage.setItem(DEEPSEEK_KEY_STORAGE, key);
     } catch {
       // Ignore storage error
     }
@@ -140,7 +165,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#eef1fb] dark:bg-[#0f1226] text-slate-900 dark:text-slate-100 transition-colors duration-300 font-cairo">
+    <div className={`min-h-screen ${stats.darkMode ? 'dark' : ''} bg-[#f1f4fb] dark:bg-[#0a0d1a] text-slate-900 dark:text-slate-100 transition-colors duration-300 font-cairo`}>
       {currentScreen === 'home' && (
         <HomeScreen
           stats={stats}
@@ -177,6 +202,7 @@ export default function App() {
       {currentScreen === 'high_thinking' && (
         <HighThinkingScreen
           stats={stats}
+          customApiKey={customApiKey}
           onBackHome={() => setCurrentScreen('home')}
         />
       )}
@@ -195,6 +221,12 @@ export default function App() {
         onSelectDifficulty={setSelectedDifficulty}
         onStart={handleStartMathGame}
         onClose={() => setIsDifficultyModalOpen(false)}
+      />
+
+      {/* Background CPU, Memory & DeepSeek Status Bar */}
+      <BackgroundTelemetryHUD
+        customApiKey={customApiKey}
+        onUpdateApiKey={handleUpdateApiKey}
       />
     </div>
   );

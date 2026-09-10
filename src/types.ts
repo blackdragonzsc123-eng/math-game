@@ -61,6 +61,8 @@ export interface HighThinkingResponse {
   title?: string;
   content: string;
   thinkingSummary?: string;
+  reasoningContent?: string;
+  provider?: 'deepseek' | 'offline_bank';
   riddleData?: {
     puzzle: string;
     question: string;
@@ -75,4 +77,17 @@ export interface HighThinkingResponse {
     explanation: string;
   };
   error?: string;
+}
+
+export interface SystemTelemetry {
+  clientCpuPercent: number;
+  clientMemoryMb: number;
+  clientTotalHeapMb: number;
+  serverHeapMb?: number;
+  serverRssMb?: number;
+  serverLoadAvg?: number;
+  fps: number;
+  isOnline: boolean;
+  hasDeepSeekKey: boolean;
+  timestamp: number;
 }

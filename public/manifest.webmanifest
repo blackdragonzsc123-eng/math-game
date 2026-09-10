@@ -1,0 +1,35 @@
+{
+  "id": "/",
+  "name": "تدريب الدماغ — ألعاب ذهنية",
+  "short_name": "تدريب الدماغ",
+  "description": "تطبيق تدريب ذهني وألعاب عقلية باللغة العربية يعمل دون إنترنت مع نمط التفكير العالي من DeepSeek ومراقبة موارد النظام.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0c0f1d",
+  "theme_color": "#4f46e5",
+  "dir": "rtl",
+  "lang": "ar",
+  "categories": ["education", "games"],
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

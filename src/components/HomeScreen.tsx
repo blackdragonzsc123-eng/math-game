@@ -40,11 +40,11 @@ const GAMES: GameMetadata[] = [
   },
   {
     id: 'high_thinking',
-    name: 'نمط التفكير العالي (AI)',
-    desc: 'ألغاز استنتاجية عميقة وتحليل إدراكي مع Gemini 3.1 Pro',
+    name: 'نمط التفكير العالي (DeepSeek)',
+    desc: 'ألغاز استنتاجية عميقة واستدلال منطقي بنموذج DeepSeek R1 وبنك أوفلاين',
     iconName: 'Sparkles',
     gradient: 'from-amber-500 to-indigo-600',
-    badge: 'High Thinking'
+    badge: 'DeepSeek R1'
   },
   {
     id: 'op',
